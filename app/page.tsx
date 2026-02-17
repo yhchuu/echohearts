@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback, useRef, useEffect } from "react"
+import { useState, useCallback, useRef, useEffect ,Suspense} from "react"
 import { SplashScreen } from "@/components/splash-screen"
 import { InputForm, type UserInfo } from "@/components/input-form"
 import { QuizCard } from "@/components/quiz-card"
@@ -13,50 +13,51 @@ import { supabase } from '@/lib/supabase'
 
 type Phase = "splash" | "input" | "quiz" | "loading" | "results"
 
-export default function EchoHeartApp() {
+export function EchoHeartApp() {
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  
+  // 【关键修改 1】：把这个 Hook 挪到这里，它是 React 的“规矩”
+  const searchParams = useSearchParams() 
+  // 【关键修改 2】：直接从 searchParams 拿到 code，不需要 useEffect 赋值
+  const code = searchParams.get("code")
+
   const [playing, setPlaying] = useState(true)
   const [phase, setPhase] = useState<Phase>("splash")
   const [qIndex, setQIndex] = useState(0)
   const [answers, setAnswers] = useState<number[]>([])
   const [loadingStep, setLoadingStep] = useState(0)
   const [isCodeValid, setIsCodeValid] = useState(false)
-  const [code, setCode] = useState<string | null>(null)
 
-useEffect(() => {
-  const searchParams = useSearchParams()
-  setCode(searchParams.get("code"))
-}, [])
+  useEffect(() => {
+    const checkCode = async () => {
+      if (!code) {
+        alert("请先购买测试哦～")
+        return
+      }
 
-useEffect(() => {
-  const checkCode = async () => {
-    if (!code) {
-      alert("请先购买测试哦～")
-      return
+      // 这里写你之前校验 code 的逻辑
+      const { data, error } = await supabase
+        .from("codes")
+        .select("*")
+        .eq("code", code)
+        .single()
+
+      if (error || !data) {
+        alert("邀请码无效")
+        return
+      }
+
+      if (data.used) {
+        alert("这个邀请码已经使用过了")
+        return
+      }
+
+      setIsCodeValid(true)
     }
 
-    const { data, error } = await supabase
-      .from('codes')
-      .select('*')
-      .eq('code', code)
-      .single()
+    checkCode()
+  }, [code])
 
-    if (error || !data) {
-      alert("邀请码无效")
-      return
-    }
-
-    if (data.used) {
-      alert("这个邀请码已经使用过了")
-      return
-    }
-
-    // ✅ 合法 + 未使用
-    setIsCodeValid(true)
-  }
-
-  checkCode()
-}, [code])
 
 
   
@@ -219,5 +220,12 @@ if (code) {
         )}
       </div>
     </main>
+  )
+}
+export default function WrappedApp() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <EchoHeartApp />
+    </Suspense>
   )
 }
