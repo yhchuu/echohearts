@@ -21,7 +21,14 @@ interface ResultsProps {
   idolInfo: UserInfo
   completionTime: string
 }
-
+function hash(str: string) {
+  let h = 0
+  for (let i = 0; i < str.length; i++) {
+    h = (h << 5) - h + str.charCodeAt(i)
+    h |= 0
+  }
+  return Math.abs(h)
+}
 function pick<T>(arr: T[], seed: number): T {
   if (!arr || arr.length === 0) return {} as T
   return arr[Math.abs(seed) % arr.length]
@@ -100,8 +107,9 @@ const loveStory = pick(interactionScenesByType[loveType], base + 2)
 const identity = pick(identityCardsByType[loveType], (answers[3] ?? 0) + base)
 
 const chosenPet = pick(petList, (answers[1] ?? 0) + base)
-const kakaoMessage = pickTwoLines(kakaoLines, base + 7)
+const seedForKakao = hash((userInfo.name ?? "") + (idolInfo.name ?? ""))
 
+const kakaoMessage = pickTwoLines(kakaoLines, seedForKakao)
 
 const chosenActivity = pick(
   activitiesByType[loveType],
