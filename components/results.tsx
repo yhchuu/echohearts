@@ -349,6 +349,8 @@ function KakaoTalkPopup({
   completionTime: string
   onClose: () => void
 }) {
+  const today = new Date()
+  const dateText = `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日`
   const [userMsg, setUserMsg] = useState("")
   const [sent, setSent] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -431,7 +433,7 @@ function KakaoTalkPopup({
         <div className="flex justify-center py-2.5" style={{ background: "#B2C7D9" }}>
           <div className="rounded-full px-3.5 py-1" style={{ background: "rgba(0,0,0,0.08)" }}>
             <p className="font-sans text-[10px]" style={{ color: "rgba(255,255,255,0.85)" }}>
-              2026年2月11日
+              {dateText}
             </p>
           </div>
         </div>
