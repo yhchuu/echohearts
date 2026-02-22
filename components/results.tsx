@@ -83,20 +83,20 @@ export function Results({ answers, userInfo, idolInfo, completionTime }: Results
   "다른 건 몰라도 너 웃는 건 계속 보고 싶어",
   "너한테 잘 보이고 싶은 거, 나만 이런 거 아니지?"
 ]
-function pickTwoLines(arr: string[], seed: number) {
+function pickTwoLines(arr: string[]) {
   if (!arr || arr.length === 0) return []
   if (arr.length === 1) return [arr[0]]
 
-  const first = seed % arr.length
-  let second = (seed * 7) % arr.length
+  const first = Math.floor(Math.random() * arr.length)
 
-  if (second === first) {
-    second = (second + 1) % arr.length
+  let second = Math.floor(Math.random() * arr.length)
+
+  while (second === first) {
+    second = Math.floor(Math.random() * arr.length)
   }
 
   return [arr[first], arr[second]]
 }
-
  const base = seed   // 👉 统一随机源
 
 const petList = petsByType[loveType] || []
@@ -107,10 +107,8 @@ const loveStory = pick(interactionScenesByType[loveType], base + 2)
 const identity = pick(identityCardsByType[loveType], (answers[3] ?? 0) + base)
 
 const chosenPet = pick(petList, (answers[1] ?? 0) + base)
-const seedForKakao = hash((userInfo.name ?? "") + (idolInfo.name ?? ""))
 
-const kakaoMessage = pickTwoLines(kakaoLines, seedForKakao)
-
+const kakaoMessage = pickTwoLines(kakaoLines)
 const chosenActivity = pick(
   activitiesByType[loveType],
   (answers[4] ?? 0) + base
