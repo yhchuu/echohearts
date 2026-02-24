@@ -157,11 +157,11 @@ export const playlistByType = {
 
 
 export const petsByType = {
-  healing: [  "布偶猫（Ragdoll）——仙女猫，和你一样有着优雅的颜值。","俄罗斯蓝猫（Russian Blue）——高冷神秘，但只会在你们面前露出肚皮。","仓鼠（Hamster）——小小的，他可以捧在手心里，就像捧着你一样。"],
-  sweet: [ "比熊犬（Bichon）——像棉花糖一样，和他一样需要每天亲亲抱抱。","柯基（Corgi）——短腿翘臀，看着它跑步你们俩都会笑出声。"],
+  healing: [  "布偶猫（Ragdoll）——仙女猫，和你一样有着优雅的颜值。","德国牧羊犬（German Shepherd）——可靠又有安全感，会默默守着你。", "金吉拉猫（Chinchilla Persian）——优雅又安静，只会在你们身边撒娇。","布偶猫（Ragdoll）——总是安安静静躺在你们身边，像你们的关系一样温柔稳定。","俄罗斯蓝猫（Russian Blue）——高冷神秘，但只会在你们面前露出肚皮。","仓鼠（Hamster）——小小的，他可以捧在手心里，就像捧着你一样。"],
+  sweet: [ "比熊犬（Bichon）——像棉花糖一样，和他一样需要每天亲亲抱抱。","博美犬（Pomeranian）——活泼又爱撒娇，每天围着你们转个不停。","柯基（Corgi）——短腿翘臀，看着它跑步你们俩都会笑出声。"],
   future: [ "马尔济斯（Maltese）——娇气的小公主，会成为你们俩共同的“掌上明珠”。","金毛寻回犬（Golden Retriever）——温暖治愈的大狗狗，像他给你带来的安全感。" ],
   cool: [ "柴犬（Shiba Inu）——倔强又可爱，有时候性格简直和他一模一样。","边境牧羊犬（Border Collie）——聪明机灵，会帮你看住那个偶尔迷糊的他。" ],
-  romantic: [ "刺猬（Hedgehog）——外表带刺内心柔软，是属于你们俩的独特小确幸。" ]
+  romantic: [ "阿拉斯加犬（Alaskan Malamute）——外表高冷但对你们很温顺。","刺猬（Hedgehog）——外表带刺内心柔软，是属于你们俩的独特小确幸。" ]
 }
 
 

@@ -110,6 +110,7 @@ const identity = pick(identityCardsByType[loveType], (answers[3] ?? 0) + base + 
 
 const chosenPet = pick(petList, (answers[1] ?? 0) + base + plotOffset)
 
+
 // 保持你原来的这行不变，不动 KKT
 const kakaoMessage = pickTwoLines(kakaoLines)
 
