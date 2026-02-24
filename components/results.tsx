@@ -38,6 +38,8 @@ const spotifyUrl = (title: string) => `https://open.spotify.com/search/${encodeU
 
 export function Results({ answers, userInfo, idolInfo, completionTime }: ResultsProps) {
   const [matchPercent, setMatchPercent] = useState(0)
+  // 第 50 行左右新增：这会让每次进入页面时，抽取的剧情序号都发生偏移
+const [plotOffset] = useState(() => Math.floor(Math.random() * 10));
   const [counted, setCounted] = useState(false)
   const [showKakao, setShowKakao] = useState(false)
 
@@ -102,29 +104,31 @@ function pickTwoLines(arr: string[]) {
 const petList = petsByType[loveType] || []
 const thoughtList = crowdThoughtsByType[loveType] || []
 
-const loveStory = pick(interactionScenesByType[loveType], base + 2)
+const loveStory = pick(interactionScenesByType[loveType], base + plotOffset + 2)
 
-const identity = pick(identityCardsByType[loveType], (answers[3] ?? 0) + base)
+const identity = pick(identityCardsByType[loveType], (answers[3] ?? 0) + base + plotOffset)
 
-const chosenPet = pick(petList, (answers[1] ?? 0) + base)
+const chosenPet = pick(petList, (answers[1] ?? 0) + base + plotOffset)
 
+// 保持你原来的这行不变，不动 KKT
 const kakaoMessage = pickTwoLines(kakaoLines)
+
 const chosenActivity = pick(
   activitiesByType[loveType],
-  (answers[4] ?? 0) + base
+  (answers[4] ?? 0) + base + plotOffset
 )
 
-const crowdThought = pick(thoughtList, (answers[0] ?? 0) + base)
+const crowdThought = pick(thoughtList, (answers[0] ?? 0) + base + plotOffset)
 
 const playlistList = playlistByType[loveType] || []
 
 const recommendedSongs =
   playlistList.length > 0
     ? Array.from({ length: 3 }, (_, i) => {
-        return playlistList[(base + i) % playlistList.length]
+        // 这里也加入 plotOffset 偏移
+        return playlistList[(base + plotOffset + i) % playlistList.length]
       })
     : []
-
 
 
   const animateMatch = useCallback(() => {
