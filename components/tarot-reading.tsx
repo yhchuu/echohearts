@@ -29,11 +29,23 @@ export function TarotReading() {
   const [phase, setPhase] = useState<Phase>("idle")
   const [question, setQuestion] = useState("")
   const [drawnCards, setDrawnCards] = useState<Card[]>([])
+  // Fisher–Yates 洗牌算法（真正随机）
+function shuffle(array: string[]) {
+  const arr = [...array]
+
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+
+    ;[arr[i], arr[j]] = [arr[j], arr[i]]
+  }
+
+  return arr
+}
 
   // 真实的洗牌与抽牌逻辑
   const drawCards = () => {
     // 打乱 78 张牌
-    const shuffled = [...FULL_DECK].sort(() => 0.5 - Math.random())
+    const shuffled = shuffle(FULL_DECK)
     // 抽取前 3 张，并随机赋予正逆位
     const selected = shuffled.slice(0, 3).map(cardName => ({
       name: cardName,
