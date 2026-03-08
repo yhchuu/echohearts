@@ -14,6 +14,7 @@ import { getLoveType } from "@/lib/utils"
 import React, { useState, useEffect, useCallback } from "react"
 import { LaceDivider } from "./decorations"
 import { type UserInfo } from "./input-form"
+import { TarotReading } from "./tarot-reading"
 
 interface ResultsProps {
   answers: number[]
@@ -299,6 +300,7 @@ const recommendedSongs =
       <p className="font-serif text-xs font-light tracking-[0.3em]" style={{ color: "#ccc" }}>
         EchoHeart
       </p>
+      <TarotReading />
 
       {/* KakaoTalk 弹窗：韩语非敬语，两三句 + 用户可回复一条 */}
       {showKakao && (
